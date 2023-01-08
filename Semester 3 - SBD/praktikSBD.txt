@@ -1,0 +1,106 @@
+
+Setting environment for using XAMPP for Windows.
+Nidaaul@LAPTOP-O0ON0TOV c:\xampp
+# mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database olshop;
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bd_tgs13           |
+| db_usaha           |
+| demo               |
+| information_schema |
+| kuliah             |
+| latihan_uas        |
+| mysql              |
+| olshop             |
+| performance_schema |
+| phpmyadmin         |
+| pwl_uas            |
+| test               |
+| tgs_bd             |
++--------------------+
+13 rows in set (0.055 sec)
+
+MariaDB [(none)]> use olshop;
+Database changed
+MariaDB [olshop]> create table produk(id_produk varchar(5), nama varchar(20), merk varchar(20), satuan varchar(20), harga int(20));
+Query OK, 0 rows affected (0.055 sec)
+
+MariaDB [olshop]> inaert into produk values('ATK01','Kertas fotocopy A4','Sidu','Rim',30000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'inaert into produk values('ATK01','Kertas fotocopy A4','Sidu','Rim',30000)' at line 1
+MariaDB [olshop]> insert into produk values('ATK01','Kertas fotocopy A4','Sidu','Rim',30000);
+Query OK, 1 row affected (0.056 sec)
+
+MariaDB [olshop]> insert into produk values('COM01','Speaker','Advance','Buah',250000);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [olshop]> insert into produk values('MEB01','Rak 4 Pintu','Universe','Buah',200000);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [olshop]> select * from produk;
++-----------+--------------------+----------+--------+--------+
+| id_produk | nama               | merk     | satuan | harga  |
++-----------+--------------------+----------+--------+--------+
+| ATK01     | Kertas fotocopy A4 | Sidu     | Rim    |  30000 |
+| COM01     | Speaker            | Advance  | Buah   | 250000 |
+| MEB01     | Rak 4 Pintu        | Universe | Buah   | 200000 |
++-----------+--------------------+----------+--------+--------+
+3 rows in set (0.004 sec)
+
+MariaDB [olshop]> alter table produk add id_kategori int;
+Query OK, 0 rows affected (0.035 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [olshop]> select * from produk;
++-----------+--------------------+----------+--------+--------+-------------+
+| id_produk | nama               | merk     | satuan | harga  | id_kategori |
++-----------+--------------------+----------+--------+--------+-------------+
+| ATK01     | Kertas fotocopy A4 | Sidu     | Rim    |  30000 |        NULL |
+| COM01     | Speaker            | Advance  | Buah   | 250000 |        NULL |
+| MEB01     | Rak 4 Pintu        | Universe | Buah   | 200000 |        NULL |
++-----------+--------------------+----------+--------+--------+-------------+
+3 rows in set (0.001 sec)
+
+MariaDB [olshop]> alter table produk change nama nama_produk varchar(200);
+Query OK, 0 rows affected (0.033 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [olshop]> select * from produk;
++-----------+--------------------+----------+--------+--------+-------------+
+| id_produk | nama_produk        | merk     | satuan | harga  | id_kategori |
++-----------+--------------------+----------+--------+--------+-------------+
+| ATK01     | Kertas fotocopy A4 | Sidu     | Rim    |  30000 |        NULL |
+| COM01     | Speaker            | Advance  | Buah   | 250000 |        NULL |
+| MEB01     | Rak 4 Pintu        | Universe | Buah   | 200000 |        NULL |
++-----------+--------------------+----------+--------+--------+-------------+
+3 rows in set (0.001 sec)
+
+MariaDB [olshop]> alter table drop satuan;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'drop satuan' at line 1
+MariaDB [olshop]> alter table produk drop satuan;
+Query OK, 0 rows affected (0.025 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [olshop]> select * from produk;
++-----------+--------------------+----------+--------+-------------+
+| id_produk | nama_produk        | merk     | harga  | id_kategori |
++-----------+--------------------+----------+--------+-------------+
+| ATK01     | Kertas fotocopy A4 | Sidu     |  30000 |        NULL |
+| COM01     | Speaker            | Advance  | 250000 |        NULL |
+| MEB01     | Rak 4 Pintu        | Universe | 200000 |        NULL |
++-----------+--------------------+----------+--------+-------------+
+3 rows in set (0.001 sec)
+
+MariaDB [olshop]>

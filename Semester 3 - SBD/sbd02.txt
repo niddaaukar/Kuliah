@@ -1,0 +1,610 @@
+
+Setting environment for using XAMPP for Windows.
+Nidaaul@LAPTOP-O0ON0TOV c:\xampp
+# mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bd_tgs13           |
+| db_usaha           |
+| demo               |
+| information_schema |
+| kuliah             |
+| latihan_uas        |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| pwl_uas            |
+| test               |
+| tgs_bd             |
++--------------------+
+12 rows in set (0.096 sec)
+
+MariaDB [(none)]> use db_usaha;
+Database changed
+MariaDB [db_usaha]> select nip, nama, gaji*12 as gaji_dalam_setahun from staf;
++-----+--------+--------------------+
+| nip | nama   | gaji_dalam_setahun |
++-----+--------+--------------------+
+| A01 | Nida   |          120000000 |
+| M01 | Aulia  |           60000000 |
+| S01 | Karima |           90000000 |
++-----+--------+--------------------+
+3 rows in set (0.138 sec)
+
+MariaDB [db_usaha]> select nip, nama, 0.2*gaji as tunjangan from staf;
++-----+--------+-----------+
+| nip | nama   | tunjangan |
++-----+--------+-----------+
+| A01 | Nida   | 2000000.0 |
+| M01 | Aulia  | 1000000.0 |
+| S01 | Karima | 1500000.0 |
++-----+--------+-----------+
+3 rows in set (0.006 sec)
+
+MariaDB [db_usaha]> select nip, nama, gaji+(0.2*gaji) as total_gaji from staf;
++-----+--------+------------+
+| nip | nama   | total_gaji |
++-----+--------+------------+
+| A01 | Nida   | 12000000.0 |
+| M01 | Aulia  |  6000000.0 |
+| S01 | Karima |  9000000.0 |
++-----+--------+------------+
+3 rows in set (0.003 sec)
+
+MariaDB [db_usaha]> select nip, nama, year(now())-year(tgl_masuk) as masa_kerja from staf;
++-----+--------+------------+
+| nip | nama   | masa_kerja |
++-----+--------+------------+
+| A01 | Nida   |          0 |
+| M01 | Aulia  |          0 |
+| S01 | Karima |          0 |
++-----+--------+------------+
+3 rows in set (0.006 sec)
+
+MariaDB [db_usaha]> drop database db_usaha;
+Query OK, 2 rows affected (0.176 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bd_tgs13           |
+| demo               |
+| information_schema |
+| kuliah             |
+| latihan_uas        |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| pwl_uas            |
+| test               |
+| tgs_bd             |
++--------------------+
+11 rows in set (0.001 sec)
+
+MariaDB [(none)]> create database db_usaha;
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bd_tgs13           |
+| db_usaha           |
+| demo               |
+| information_schema |
+| kuliah             |
+| latihan_uas        |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| pwl_uas            |
+| test               |
+| tgs_bd             |
++--------------------+
+12 rows in set (0.001 sec)
+
+MariaDB [(none)]> create table branch(id_cabang(4) primary key, alamat varchar(20), kota varchar(20), kodepos int(5));
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> use db_usaha;
+Database changed
+MariaDB [db_usaha]> create table branch(id_cabang(4) primary key, alamat varchar(20), kota varchar(20), kodepos int(5));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(4) primary key, alamat varchar(20), kota varchar(20), kodepos int(5))' at line 1
+MariaDB [db_usaha]> create table branch(id_cabang varchar(4) primary key, alamat varchar(20), kota varchar(20), kodepos int(5));
+Query OK, 0 rows affected (0.060 sec)
+
+MariaDB [db_usaha]> desc branch;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id_cabang | varchar(4)  | NO   | PRI | NULL    |       |
+| alamat    | varchar(20) | YES  |     | NULL    |       |
+| kota      | varchar(20) | YES  |     | NULL    |       |
+| kodepos   | int(5)      | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.034 sec)
+
+MariaDB [db_usaha]> create table staf(nip varchar(3) primary key, nama varchar(15), posisi varchar(20), tgl_masuk date, gaji int(15));
+Query OK, 0 rows affected (0.054 sec)
+
+MariaDB [db_usaha]> desc staf;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nip       | varchar(3)  | NO   | PRI | NULL    |       |
+| nama      | varchar(15) | YES  |     | NULL    |       |
+| posisi    | varchar(20) | YES  |     | NULL    |       |
+| tgl_masuk | date        | YES  |     | NULL    |       |
+| gaji      | int(15)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.029 sec)
+
+MariaDB [db_usaha]> insert into branch values('B001','Imam Bonjol','Semarang', 50131);
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [db_usaha]> insert into brancch values('B002','Laweyan','Solo',57148);
+ERROR 1146 (42S02): Table 'db_usaha.brancch' doesn't exist
+MariaDB [db_usaha]> insert into branch values('B002','Laweyan','Solo',57148);
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [db_usaha]> insert into branch values('B003','Kaliurang','Yogyakarta',56483);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [db_usaha]> select * from branch;
++-----------+-------------+------------+---------+
+| id_cabang | alamat      | kota       | kodepos |
++-----------+-------------+------------+---------+
+| B001      | Imam Bonjol | Semarang   |   50131 |
+| B002      | Laweyan     | Solo       |   57148 |
+| B003      | Kaliurang   | Yogyakarta |   56483 |
++-----------+-------------+------------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> insert into staf values('A01','Wahyu','Asisten','2014-08-10',5000000);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [db_usaha]> insert into staf values('M01','Budi','Manager','1996-01-01',1000000);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [db_usaha]> insert into staf values('S01','Budi','Spervisor','2000-02-05',7500000);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [db_usaha]> select * from staf;
++-----+-------+-----------+------------+---------+
+| nip | nama  | posisi    | tgl_masuk  | gaji    |
++-----+-------+-----------+------------+---------+
+| A01 | Wahyu | Asisten   | 2014-08-10 | 5000000 |
+| M01 | Budi  | Manager   | 1996-01-01 | 1000000 |
+| S01 | Budi  | Spervisor | 2000-02-05 | 7500000 |
++-----+-------+-----------+------------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, gaji*12 as gaji_dalam_setahun from staf;
++-----+-------+--------------------+
+| nip | nama  | gaji_dalam_setahun |
++-----+-------+--------------------+
+| A01 | Wahyu |           60000000 |
+| M01 | Budi  |           12000000 |
+| S01 | Budi  |           90000000 |
++-----+-------+--------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, 0.2*gaji as tunjangan from staf;
++-----+-------+-----------+
+| nip | nama  | tunjangan |
++-----+-------+-----------+
+| A01 | Wahyu | 1000000.0 |
+| M01 | Budi  |  200000.0 |
+| S01 | Budi  | 1500000.0 |
++-----+-------+-----------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, gaji+(0.2*gaji) as total_gaji from staf;
++-----+-------+------------+
+| nip | nama  | total_gaji |
++-----+-------+------------+
+| A01 | Wahyu |  6000000.0 |
+| M01 | Budi  |  1200000.0 |
+| S01 | Budi  |  9000000.0 |
++-----+-------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [db_usaha]> select nip, nama, year(now())-year(tgl_masuk) as masa_kerja from staf;
++-----+-------+------------+
+| nip | nama  | masa_kerja |
++-----+-------+------------+
+| A01 | Wahyu |          8 |
+| M01 | Budi  |         26 |
+| S01 | Budi  |         22 |
++-----+-------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where posisi='Manager';
++-----+------+---------+------------+---------+
+| nip | nama | posisi  | tgl_masuk  | gaji    |
++-----+------+---------+------------+---------+
+| M01 | Budi | Manager | 1996-01-01 | 1000000 |
++-----+------+---------+------------+---------+
+1 row in set (0.009 sec)
+
+MariaDB [db_usaha]> select nip, nama, posisi, tgl_masuk, 0.2*gaji as tunjangan from staf where 0.2*gaji > 500000;
++-----+-------+-----------+------------+-----------+
+| nip | nama  | posisi    | tgl_masuk  | tunjangan |
++-----+-------+-----------+------------+-----------+
+| A01 | Wahyu | Asisten   | 2014-08-10 | 1000000.0 |
+| S01 | Budi  | Spervisor | 2000-02-05 | 1500000.0 |
++-----+-------+-----------+------------+-----------+
+2 rows in set (0.004 sec)
+
+MariaDB [db_usaha]> select * from staf where posisi != 'Manager';
++-----+-------+-----------+------------+---------+
+| nip | nama  | posisi    | tgl_masuk  | gaji    |
++-----+-------+-----------+------------+---------+
+| A01 | Wahyu | Asisten   | 2014-08-10 | 5000000 |
+| S01 | Budi  | Spervisor | 2000-02-05 | 7500000 |
++-----+-------+-----------+------------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where posisi = 'Manager' || posisi = 'Supervisor';
++-----+------+---------+------------+---------+
+| nip | nama | posisi  | tgl_masuk  | gaji    |
++-----+------+---------+------------+---------+
+| M01 | Budi | Manager | 1996-01-01 | 1000000 |
++-----+------+---------+------------+---------+
+1 row in set (0.001 sec)
+
+MariaDB [db_usaha]> update staf set nama='Sari' where nip='S01';
+Query OK, 1 row affected (0.014 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db_usaha]> select * from staf;
++-----+-------+-----------+------------+---------+
+| nip | nama  | posisi    | tgl_masuk  | gaji    |
++-----+-------+-----------+------------+---------+
+| A01 | Wahyu | Asisten   | 2014-08-10 | 5000000 |
+| M01 | Budi  | Manager   | 1996-01-01 | 1000000 |
+| S01 | Sari  | Spervisor | 2000-02-05 | 7500000 |
++-----+-------+-----------+------------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, gaji*12 as gaji_dalam_setahun from staf;
++-----+-------+--------------------+
+| nip | nama  | gaji_dalam_setahun |
++-----+-------+--------------------+
+| A01 | Wahyu |           60000000 |
+| M01 | Budi  |           12000000 |
+| S01 | Sari  |           90000000 |
++-----+-------+--------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, 0.2*gaji as tunjangan from staf;
++-----+-------+-----------+
+| nip | nama  | tunjangan |
++-----+-------+-----------+
+| A01 | Wahyu | 1000000.0 |
+| M01 | Budi  |  200000.0 |
+| S01 | Sari  | 1500000.0 |
++-----+-------+-----------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, gaji+(0.2*gaji) as total_gaji from staf;
++-----+-------+------------+
+| nip | nama  | total_gaji |
++-----+-------+------------+
+| A01 | Wahyu |  6000000.0 |
+| M01 | Budi  |  1200000.0 |
+| S01 | Sari  |  9000000.0 |
++-----+-------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, year(now())-year(tgl_masuk) as masa_kerja from staf;
++-----+-------+------------+
+| nip | nama  | masa_kerja |
++-----+-------+------------+
+| A01 | Wahyu |          8 |
+| M01 | Budi  |         26 |
+| S01 | Sari  |         22 |
++-----+-------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where posisi='Manager';
++-----+------+---------+------------+---------+
+| nip | nama | posisi  | tgl_masuk  | gaji    |
++-----+------+---------+------------+---------+
+| M01 | Budi | Manager | 1996-01-01 | 1000000 |
++-----+------+---------+------------+---------+
+1 row in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, posisi, tgl_masuk, 0.2*gaji as tunjangan from staf where 0.2*gaji > 500000;
++-----+-------+-----------+------------+-----------+
+| nip | nama  | posisi    | tgl_masuk  | tunjangan |
++-----+-------+-----------+------------+-----------+
+| A01 | Wahyu | Asisten   | 2014-08-10 | 1000000.0 |
+| S01 | Sari  | Spervisor | 2000-02-05 | 1500000.0 |
++-----+-------+-----------+------------+-----------+
+2 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where posisi != 'Manager';
++-----+-------+-----------+------------+---------+
+| nip | nama  | posisi    | tgl_masuk  | gaji    |
++-----+-------+-----------+------------+---------+
+| A01 | Wahyu | Asisten   | 2014-08-10 | 5000000 |
+| S01 | Sari  | Spervisor | 2000-02-05 | 7500000 |
++-----+-------+-----------+------------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where posisi = 'Manager' || posisi = 'Supervisor';
++-----+------+---------+------------+---------+
+| nip | nama | posisi  | tgl_masuk  | gaji    |
++-----+------+---------+------------+---------+
+| M01 | Budi | Manager | 1996-01-01 | 1000000 |
++-----+------+---------+------------+---------+
+1 row in set (0.001 sec)
+
+MariaDB [db_usaha]> update staf set posisi='Supervisor' where nip='S01';
+Query OK, 1 row affected (0.005 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db_usaha]> select * from staf where posisi = 'Manager' || posisi = 'Supervisor';
++-----+------+------------+------------+---------+
+| nip | nama | posisi     | tgl_masuk  | gaji    |
++-----+------+------------+------------+---------+
+| M01 | Budi | Manager    | 1996-01-01 | 1000000 |
+| S01 | Sari | Supervisor | 2000-02-05 | 7500000 |
++-----+------+------------+------------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, posisi, year(now())-year(tgl_masuk) as masa_kerja, gaji from staf where year(now))-year(tgl_masuk)>=8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')-year(tgl_masuk)>=8' at line 1
+MariaDB [db_usaha]> select nip, nama, posisi, year(now())-year(tgl_masuk) as masa_kerja, gaji from staf where year(now))-year(tgl_masuk)>=8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')-year(tgl_masuk)>=8' at line 1
+MariaDB [db_usaha]> select nip, nama, posisi, year(now())-year(tgl_masuk) as masa_kerja, gaji from staf where year(now())-year(tgl_masuk)>=8;
++-----+-------+------------+------------+---------+
+| nip | nama  | posisi     | masa_kerja | gaji    |
++-----+-------+------------+------------+---------+
+| A01 | Wahyu | Asisten    |          8 | 5000000 |
+| M01 | Budi  | Manager    |         26 | 1000000 |
+| S01 | Sari  | Supervisor |         22 | 7500000 |
++-----+-------+------------+------------+---------+
+3 rows in set (0.019 sec)
+
+MariaDB [db_usaha]> select * from staf where gaji != 10000000;
++-----+-------+------------+------------+---------+
+| nip | nama  | posisi     | tgl_masuk  | gaji    |
++-----+-------+------------+------------+---------+
+| A01 | Wahyu | Asisten    | 2014-08-10 | 5000000 |
+| M01 | Budi  | Manager    | 1996-01-01 | 1000000 |
+| S01 | Sari  | Supervisor | 2000-02-05 | 7500000 |
++-----+-------+------------+------------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where gaji != 10000000;
++-----+-------+------------+------------+---------+
+| nip | nama  | posisi     | tgl_masuk  | gaji    |
++-----+-------+------------+------------+---------+
+| A01 | Wahyu | Asisten    | 2014-08-10 | 5000000 |
+| M01 | Budi  | Manager    | 1996-01-01 | 1000000 |
+| S01 | Sari  | Supervisor | 2000-02-05 | 7500000 |
++-----+-------+------------+------------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> DROP DATABASE db_usaha;
+Query OK, 2 rows affected (0.050 sec)
+
+MariaDB [(none)]> create database db_usaha;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bd_tgs13           |
+| db_usaha           |
+| demo               |
+| information_schema |
+| kuliah             |
+| latihan_uas        |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| pwl_uas            |
+| test               |
+| tgs_bd             |
++--------------------+
+12 rows in set (0.004 sec)
+
+MariaDB [(none)]> use db_usaha;
+Database changed
+MariaDB [db_usaha]> create table branch(id_cabang(4) primary key, alamat varchar(20), kota varchar(20), kodepos int(5));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(4) primary key, alamat varchar(20), kota varchar(20), kodepos int(5))' at line 1
+MariaDB [db_usaha]> create table branch(id_cabang varchar(4) primary key, alamat varchar(20), kota varchar(20), kodepos int(5));
+Query OK, 0 rows affected (0.069 sec)
+
+MariaDB [db_usaha]> desc branch;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id_cabang | varchar(4)  | NO   | PRI | NULL    |       |
+| alamat    | varchar(20) | YES  |     | NULL    |       |
+| kota      | varchar(20) | YES  |     | NULL    |       |
+| kodepos   | int(5)      | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.033 sec)
+
+MariaDB [db_usaha]> create table staf(nip varchar(3) primary key, nama varchar(15), posisi varchar(20), tgl_masuk date, gaji int(15));
+Query OK, 0 rows affected (0.052 sec)
+
+MariaDB [db_usaha]> desc staf;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nip       | varchar(3)  | NO   | PRI | NULL    |       |
+| nama      | varchar(15) | YES  |     | NULL    |       |
+| posisi    | varchar(20) | YES  |     | NULL    |       |
+| tgl_masuk | date        | YES  |     | NULL    |       |
+| gaji      | int(15)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.029 sec)
+
+MariaDB [db_usaha]> insert into branch values('B001','Imam Bonjol','Semarang', 50131);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [db_usaha]> insert into branch values('B002','Laweyan','Solo',57148);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [db_usaha]> insert into branch values('B003','Kaliurang','Yogyakarta',56483);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [db_usaha]> select * from branch;
++-----------+-------------+------------+---------+
+| id_cabang | alamat      | kota       | kodepos |
++-----------+-------------+------------+---------+
+| B001      | Imam Bonjol | Semarang   |   50131 |
+| B002      | Laweyan     | Solo       |   57148 |
+| B003      | Kaliurang   | Yogyakarta |   56483 |
++-----------+-------------+------------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> insert into staf values('A01','Wahyu','Asisten','2014-08-10',5000000);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [db_usaha]> insert into staf values('M01','Budi','Manager','1996-01-01',10000000);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [db_usaha]> insert into staf values('S01','Sari','Supervisor','2000-02-05',7500000);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [db_usaha]> select * from staf;
++-----+-------+------------+------------+----------+
+| nip | nama  | posisi     | tgl_masuk  | gaji     |
++-----+-------+------------+------------+----------+
+| A01 | Wahyu | Asisten    | 2014-08-10 |  5000000 |
+| M01 | Budi  | Manager    | 1996-01-01 | 10000000 |
+| S01 | Sari  | Supervisor | 2000-02-05 |  7500000 |
++-----+-------+------------+------------+----------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, gaji*12 as gaji_dalam_setahun from staf;
++-----+-------+--------------------+
+| nip | nama  | gaji_dalam_setahun |
++-----+-------+--------------------+
+| A01 | Wahyu |           60000000 |
+| M01 | Budi  |          120000000 |
+| S01 | Sari  |           90000000 |
++-----+-------+--------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, 0.2*gaji as tunjangan from staf;
++-----+-------+-----------+
+| nip | nama  | tunjangan |
++-----+-------+-----------+
+| A01 | Wahyu | 1000000.0 |
+| M01 | Budi  | 2000000.0 |
+| S01 | Sari  | 1500000.0 |
++-----+-------+-----------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, gaji+(0.2*gaji) as total_gaji from staf;
++-----+-------+------------+
+| nip | nama  | total_gaji |
++-----+-------+------------+
+| A01 | Wahyu |  6000000.0 |
+| M01 | Budi  | 12000000.0 |
+| S01 | Sari  |  9000000.0 |
++-----+-------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, year(now())-year(tgl_masuk) as masa_kerja from staf;
++-----+-------+------------+
+| nip | nama  | masa_kerja |
++-----+-------+------------+
+| A01 | Wahyu |          8 |
+| M01 | Budi  |         26 |
+| S01 | Sari  |         22 |
++-----+-------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where posisi='Manager';
++-----+------+---------+------------+----------+
+| nip | nama | posisi  | tgl_masuk  | gaji     |
++-----+------+---------+------------+----------+
+| M01 | Budi | Manager | 1996-01-01 | 10000000 |
++-----+------+---------+------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, posisi, tgl_masuk, 0.2*gaji as tunjangan from staf where 0.2*gaji > 500000;
++-----+-------+------------+------------+-----------+
+| nip | nama  | posisi     | tgl_masuk  | tunjangan |
++-----+-------+------------+------------+-----------+
+| A01 | Wahyu | Asisten    | 2014-08-10 | 1000000.0 |
+| M01 | Budi  | Manager    | 1996-01-01 | 2000000.0 |
+| S01 | Sari  | Supervisor | 2000-02-05 | 1500000.0 |
++-----+-------+------------+------------+-----------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where posisi != 'Manager';
++-----+-------+------------+------------+---------+
+| nip | nama  | posisi     | tgl_masuk  | gaji    |
++-----+-------+------------+------------+---------+
+| A01 | Wahyu | Asisten    | 2014-08-10 | 5000000 |
+| S01 | Sari  | Supervisor | 2000-02-05 | 7500000 |
++-----+-------+------------+------------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where posisi = 'Manager' || posisi = 'Supervisor';
++-----+------+------------+------------+----------+
+| nip | nama | posisi     | tgl_masuk  | gaji     |
++-----+------+------------+------------+----------+
+| M01 | Budi | Manager    | 1996-01-01 | 10000000 |
+| S01 | Sari | Supervisor | 2000-02-05 |  7500000 |
++-----+------+------------+------------+----------+
+2 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select nip, nama, posisi, year(now())-year(tgl_masuk) as masa_kerja, gaji from staf where year(now())-year(tgl_masuk)>=8;
++-----+-------+------------+------------+----------+
+| nip | nama  | posisi     | masa_kerja | gaji     |
++-----+-------+------------+------------+----------+
+| A01 | Wahyu | Asisten    |          8 |  5000000 |
+| M01 | Budi  | Manager    |         26 | 10000000 |
+| S01 | Sari  | Supervisor |         22 |  7500000 |
++-----+-------+------------+------------+----------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_usaha]> select * from staf where gaji != 10000000;
++-----+-------+------------+------------+---------+
+| nip | nama  | posisi     | tgl_masuk  | gaji    |
++-----+-------+------------+------------+---------+
+| A01 | Wahyu | Asisten    | 2014-08-10 | 5000000 |
+| S01 | Sari  | Supervisor | 2000-02-05 | 7500000 |
++-----+-------+------------+------------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [db_usaha]>  select nip, nama, posisi, year(now())-year(tgl_masuk) as masa_kerja, gaji from staf where year(now())-year(tgl_masuk)>=8;
++-----+-------+------------+------------+----------+
+| nip | nama  | posisi     | masa_kerja | gaji     |
++-----+-------+------------+------------+----------+
+| A01 | Wahyu | Asisten    |          8 |  5000000 |
+| M01 | Budi  | Manager    |         26 | 10000000 |
+| S01 | Sari  | Supervisor |         22 |  7500000 |
++-----+-------+------------+------------+----------+
+3 rows in set (0.022 sec)
+
+MariaDB [db_usaha]> select nip, nama, posisi, tgl_masuk, year(now())-year(tgl_masuk) as masa_kerja , gaji from staf where posisi='Asisten' and year(now())-year(tgl_masuk) >= 8;
++-----+-------+---------+------------+------------+---------+
+| nip | nama  | posisi  | tgl_masuk  | masa_kerja | gaji    |
++-----+-------+---------+------------+------------+---------+
+| A01 | Wahyu | Asisten | 2014-08-10 |          8 | 5000000 |
++-----+-------+---------+------------+------------+---------+
+1 row in set (0.008 sec)
+
+MariaDB [db_usaha]>
